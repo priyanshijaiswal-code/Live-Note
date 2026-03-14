@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-purple: #b026ff;
+  --color-neon-pink: #ff2a85;
+  --color-neon-blue: #00f0ff;
+  --color-dark-bg: #09090b;
+  --color-dark-surface: #121214;
+  --color-dark-border: #27272a;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px var(--accent-color, #b026ff)); }
+  50% { opacity: .5; filter: drop-shadow(0 0 20px #ff2a85); }
+}
+
+/* ── CSS Custom Properties per theme ── */
+
+/* Dark (default) */
+:root,
+html.theme-dark {
+  --bg: #09090b;
+  --bg-surface: #121214;
+  --bg-elevated: #18181b;
+  --bg-hover: rgba(255,255,255,0.05);
+  --bg-glass: rgba(18,18,20,0.4);
+  --border: rgba(255,255,255,0.08);
+  --border-strong: #27272a;
+  --text-primary: #ededed;
+  --text-secondary: #a1a1aa;
+  --text-muted: #52525b;
+  --sidebar-bg: rgba(24,24,27,0.6);
+  --accent-color: #b026ff;
+  --scrollbar-thumb: rgba(255,255,255,0.1);
+}
+
+/* Darker */
+html.theme-darker {
+  --bg: #050507;
+  --bg-surface: #0a0a0c;
+  --bg-elevated: #0f0f12;
+  --bg-hover: rgba(255,255,255,0.04);
+  --bg-glass: rgba(10,10,12,0.5);
+  --border: rgba(255,255,255,0.06);
+  --border-strong: #1c1c20;
+  --text-primary: #e8e8f0;
+  --text-secondary: #8a8a99;
+  --text-muted: #48484f;
+  --sidebar-bg: rgba(12,12,15,0.7);
+  --accent-color: #b026ff;
+  --scrollbar-thumb: rgba(255,255,255,0.08);
+}
+
+/* Midnight */
+html.theme-midnight {
+  --bg: #030308;
+  --bg-surface: #080812;
+  --bg-elevated: #0c0c1a;
+  --bg-hover: rgba(100,100,255,0.05);
+  --bg-glass: rgba(8,8,18,0.5);
+  --border: rgba(120,120,255,0.1);
+  --border-strong: #1a1a2e;
+  --text-primary: #e0e0ff;
+  --text-secondary: #8888bb;
+  --text-muted: #44446a;
+  --sidebar-bg: rgba(10,10,24,0.7);
+  --accent-color: #6060ff;
+  --scrollbar-thumb: rgba(120,120,255,0.12);
+}
+
+/* Light */
+html.theme-light {
+  --bg: #f8f9fb;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f2f4f7;
+  --bg-hover: rgba(0,0,0,0.04);
+  --bg-glass: rgba(255,255,255,0.7);
+  --border: rgba(0,0,0,0.08);
+  --border-strong: #e2e5ea;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --sidebar-bg: rgba(248,249,251,0.85);
+  --accent-color: #7c3aed;
+  --scrollbar-thumb: rgba(0,0,0,0.15);
+}
+
+/* ── Base styles that use CSS vars ── */
+
+body {
+  color: var(--text-primary);
+  background: var(--bg);
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+.glass-panel {
+  background: var(--sidebar-bg);
+  backdrop-filter: blur(16px);
+  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+/* Neon Glow utilities */
+.glow-purple {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent-color) 40%, transparent);
+}
+.glow-pink {
+  box-shadow: 0 0 20px rgba(255, 42, 133, 0.4);
+}
+
+/* Light mode overrides for hardcoded bg classes */
+html.theme-light .bg-\[\#09090b\],
+html.theme-light .bg-\[\#121214\],
+html.theme-light .bg-gradient-to-br {
+  background: var(--bg) !important;
+}
+
+html.theme-light .text-white {
+  color: var(--text-primary) !important;
+}
+
+html.theme-light .text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+
+html.theme-light .bg-white\/5,
+html.theme-light .bg-white\/8,
+html.theme-light .bg-white\/10 {
+  background: var(--bg-hover) !important;
+}
+
+html.theme-light .border-white\/10,
+html.theme-light .border-white\/5,
+html.theme-light .border-\[\#27272a\] {
+  border-color: var(--border-strong) !important;
+}
+
+html.theme-light .bg-\[\#18181b\]\/40 {
+  background: rgba(255,255,255,0.8) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+.editor-prosemirror:focus { outline: none; }
+
+/* Reduced motion */
+html.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
