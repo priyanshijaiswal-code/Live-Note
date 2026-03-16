@@ -103,7 +103,7 @@ export default function Sidebar() {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:5000/api/notes/${renamingId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notes/${renamingId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export default function Sidebar() {
     if (!user?.token) return;
     if (!confirm(`Delete "${note.title}"? This cannot be undone.`)) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/notes/${note._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notes/${note._id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${user.token}` },
       });

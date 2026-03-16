@@ -82,7 +82,7 @@ export default function CollaborativeEditor() {
 
   // Socket setup
   useEffect(() => {
-    const socket: Socket = io("http://localhost:5000");
+    const socket: Socket = io(process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000");
     socketRef.current = socket;
 
     socket.on("connect", () => {
@@ -124,7 +124,7 @@ export default function CollaborativeEditor() {
     if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     saveTimeoutRef.current = setTimeout(async () => {
       try {
-        await fetch(`http://localhost:5000/api/notes/${activeNoteId}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notes/${activeNoteId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
           body: JSON.stringify({ content: html }),

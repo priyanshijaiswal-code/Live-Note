@@ -66,7 +66,7 @@ export default function RightPanel() {
   const fetchComments = async () => {
     setIsCommentsLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/comments/${activeNoteId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/comments/${activeNoteId}`, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       const data = await res.json();
@@ -87,7 +87,7 @@ export default function RightPanel() {
     
     setIsAiLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/ai/${endpoint}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/ai/${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ export default function RightPanel() {
     
     setIsCommentsLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/comments`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ export default function RightPanel() {
   const handleDeleteComment = async (commentId: string) => {
     if (!user?.token) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/comments/${commentId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/comments/${commentId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${user.token}` }
       });

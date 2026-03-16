@@ -140,7 +140,7 @@ export default function AuthPage() {
     try {
       const endpoint = mode === "login" ? "/api/auth/login" : "/api/auth/register";
       const body = mode === "login" ? { email, password } : { name, email, password };
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -160,7 +160,7 @@ export default function AuthPage() {
     setError("");
     try {
       // Try to reach the backend first
-      const res = await fetch("http://localhost:5000/api/auth/oauth", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/oauth`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

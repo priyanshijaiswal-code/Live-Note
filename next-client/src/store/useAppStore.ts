@@ -131,7 +131,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const { user } = get();
     if (!user?.token) return;
     try {
-      const res = await fetch('http://localhost:5000/api/notes', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notes`, {
         headers: { Authorization: `Bearer ${user.token}` }
       });
       if (res.ok) {
@@ -146,7 +146,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const { user, notes } = get();
     if (!user?.token) return null;
     try {
-      const res = await fetch('http://localhost:5000/api/notes', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` },
         body: JSON.stringify({ title, content: '' })

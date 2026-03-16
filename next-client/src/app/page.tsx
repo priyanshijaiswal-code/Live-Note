@@ -30,7 +30,7 @@ export default function Home() {
     const newTitle = e.target.value;
     setNotes(notes.map(n => n._id === activeNoteId ? { ...n, title: newTitle } : n));
     try {
-      await fetch(`http://localhost:5000/api/notes/${activeNoteId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notes/${activeNoteId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` },
         body: JSON.stringify({ title: newTitle })
