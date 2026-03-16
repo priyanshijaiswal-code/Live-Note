@@ -96,13 +96,23 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/livenotes';
 
+console.log('Attempting to connect to MongoDB...');
+// Mask password in logs
+const maskedURI = MONGO_URI.replace(/:([^:@]+)@/, ':****@');
+console.log(`Connecting to: ${maskedURI}`);
+
 mongoose.connect(MONGO_URI)
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Successfully connected to MongoDB');
     server.listen(PORT, () => {
-      console.log(`Server listening on port ${PORT}`);
+      console.log(`Server is running and listening on port ${PORT}`);
     });
   })
   .catch((err) => {
-    console.error('MongoDB connection error:', err);
+    console.error('CRITICAL: MongoDB connection error:');
+    console.error(err);
+    // Keep process alive for a bit to ensure logs are sent to Render
+    setTimeout(() => {
+      process.exit(1);
+    }, 1000);
   });
